@@ -1,0 +1,72 @@
+---
+title: "Electrical_Equipment"
+author: "Bama Parthasarathy"
+date: "November 17, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Install FPP package
+
+
+```{r}
+
+library("fpp") 
+```
+a)	Plot the time series. Can you identify seasonal fluctuations and/or a trend? 
+```{r}
+data(hsales)
+hsales
+plot(hsales)
+```
+b)	Use a classical decomposition to calculate the trend-cycle and seasonal indices. 
+```{r}
+
+fitd <- decompose(hsales)
+plot(fitd)
+```
+
+c)	Do the results support the graphical interpretation from part (a)? 
+```{r}
+fit <- stl(hsales, s.window=5)
+plot(fit)
+
+```
+d)	Compute and plot the seasonally adjusted data. 
+```{r}
+eeadj <- seasadj(fitd)
+plot(eeadj)
+```
+
+e)	Change one observation to be an outlier (e.g., add 500 to one observation), and recompute the seasonally adjusted data. What is the effect of the outlier? 
+```{r}
+ee2 <- hsales
+ ee2[14] = ee2[14] + 500 
+
+ fit2 <- decompose(ee2) 
+ee2adj <- seasadj(fit2) 
+ plot(ee2adj)
+ 
+
+```
+When we include the outlier to the data, the plot of the seasonal adjustment is so high for that one month in that year.
+
+f)	Does it make any difference if the outlier is near the end rather than in the middle of the time series? 
+```{r}
+ee3 <- hsales
+ ee3[21] = ee3[21] + 501 
+
+ fit3 <- decompose(ee3) 
+ee3adj <- seasadj(fit3) 
+ plot(ee3adj)
+```
+When we include the outlier to the data, the plot of the seasonal adjustment is so high for that one month in that year and it doesnt mateer where it occurs either .
+
+g)	Use STL to decompose the series. 
+```{r}
+fit4 <- stl(hsales,t.window=15,s.window="periodic")
+fit4
+```
+
