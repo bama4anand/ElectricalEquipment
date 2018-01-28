@@ -69,4 +69,3 @@ g)	Use STL to decompose the series.
 fit4 <- stl(hsales,t.window=15,s.window="periodic")
 fit4
 ```
-
